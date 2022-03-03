@@ -21,8 +21,14 @@ help: ## Display help screen
 go-tidy: ## Go mod tidy
 	$(GO_CMD) mod tidy
 
-go-fmt: ## Go mod tidy
+go-fmt: go-tidy ## Go mod tidy
 	$(GO_CMD) fmt ./...
+
+go-test: go-fmt go-test-clean  ## Go test all project
+	$(GO_TEST) -cover -p=1 ./...
+
+go-test-clean: go-fmt ## Run the clean cache tests of the project
+	$(GO_CMD) clean -testcache
 
 docker-compose-up: ## Run docker-compose services of project
 	$(DOCKER_COMPOSE_CMD) -f $(PATH_DOCKER_COMPOSE_FILE) up -d

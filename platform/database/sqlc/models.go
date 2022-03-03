@@ -6,27 +6,27 @@ import (
 	"time"
 )
 
-type Accounts struct {
+type Account struct {
 	ID        int64     `json:"id"`
 	Owner     string    `json:"owner"`
 	Balance   int64     `json:"balance"`
 	Currency  string    `json:"currency"`
-	CreatedAd time.Time `json:"createdAd"`
+	CreatedAt time.Time `json:"createdAt"`
 }
 
-type Entries struct {
+type Entry struct {
 	ID        int64 `json:"id"`
 	AccountID int64 `json:"accountID"`
 	// can be negative or positive
 	Amount    int64     `json:"amount"`
-	CreatedAd time.Time `json:"createdAd"`
+	CreatedAt time.Time `json:"createdAt"`
 }
 
-type Transfers struct {
+type Transfer struct {
 	ID            int64 `json:"id"`
 	FromAccountID int64 `json:"fromAccountID"`
 	ToAccountID   int64 `json:"toAccountID"`
 	// must be positive
 	Amount    int64     `json:"amount"`
-	CreatedAd time.Time `json:"createdAd"`
+	CreatedAt time.Time `json:"createdAt"`
 }
