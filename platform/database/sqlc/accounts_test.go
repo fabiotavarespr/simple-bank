@@ -3,6 +3,8 @@ package database
 import (
 	"context"
 	"database/sql"
+	logger "github.com/fabiotavarespr/go-logger"
+	"github.com/fabiotavarespr/go-logger/attributes"
 	"github.com/fabiotavarespr/simple-bank/util"
 	"github.com/stretchr/testify/require"
 	"testing"
@@ -27,6 +29,8 @@ func createRandomAccount(t *testing.T) Account {
 	require.NotZero(t, account.ID)
 	require.NotZero(t, account.CreatedAt)
 
+	logger.Info("createRandomAccount", attributes.New().WithField("account", account))
+
 	return account
 }
 
@@ -46,6 +50,8 @@ func TestGetAccount(t *testing.T) {
 	require.Equal(t, account1.Owner, account2.Owner)
 	require.Equal(t, account1.Currency, account2.Currency)
 	require.WithinDuration(t, account1.CreatedAt, account2.CreatedAt, time.Second)
+
+	logger.Info("TestGetAccount", attributes.New().WithField("account1", account1).WithField("account2", account2))
 }
 
 func TestUpdateAccount(t *testing.T) {
@@ -66,6 +72,8 @@ func TestUpdateAccount(t *testing.T) {
 	require.Equal(t, account1.Owner, account2.Owner)
 	require.Equal(t, account1.Currency, account2.Currency)
 	require.WithinDuration(t, account1.CreatedAt, account2.CreatedAt, time.Second)
+
+	logger.Info("TestUpdateAccount", attributes.New().WithField("account1", account1).WithField("account2", account2))
 }
 
 func TestDeleteAccount(t *testing.T) {
@@ -77,9 +85,11 @@ func TestDeleteAccount(t *testing.T) {
 	require.Error(t, err)
 	require.EqualError(t, err, sql.ErrNoRows.Error())
 	require.Empty(t, account2)
+
+	logger.Info("TestDeleteAccount", attributes.New().WithField("account1", account1).WithField("account2", account2))
 }
 
-func TestQueries_ListAccounts(t *testing.T) {
+func TestListAccounts(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		createRandomAccount(t)
 	}
@@ -96,5 +106,7 @@ func TestQueries_ListAccounts(t *testing.T) {
 	for _, account := range accounts {
 		require.NotEmpty(t, account)
 	}
+
+	logger.Info("TestListAccounts", attributes.New().WithField("accounts", accounts))
 
 }

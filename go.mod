@@ -4,8 +4,8 @@ go 1.17
 
 require (
 	github.com/fabiotavarespr/go-env v0.0.1
-	github.com/fabiotavarespr/go-logger v0.0.0-20220303000252-0d6e18c46ae3
-	github.com/lib/pq v1.7.0
+	github.com/fabiotavarespr/go-logger v0.0.1
+	github.com/lib/pq v1.10.4
 	github.com/stretchr/testify v1.7.0
 )
 
