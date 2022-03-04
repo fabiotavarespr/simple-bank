@@ -13,6 +13,7 @@ import (
 )
 
 var testQueries *Queries
+var testDB *sql.DB
 
 const (
 	dbDriver = "postgres"
@@ -29,7 +30,8 @@ func TestMain(m *testing.M) {
 
 	defer logger.Sync()
 
-	conn, err := sql.Open(dbDriver, dbSource)
+	var err error
+	testDB, err = sql.Open(dbDriver, dbSource)
 	if err != nil {
 		details := attributes.New().WithError(errors.New("interrupt signal detected"))
 		details["dbDriver"] = dbDriver
@@ -38,6 +40,6 @@ func TestMain(m *testing.M) {
 		logger.Fatal("Connection fail", details)
 	}
 
-	testQueries = New(conn)
+	testQueries = New(testDB)
 	os.Exit(m.Run())
 }
