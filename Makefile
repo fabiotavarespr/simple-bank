@@ -27,6 +27,11 @@ go-fmt: go-tidy ## Go mod tidy
 go-test: go-fmt go-test-clean  ## Go test all project
 	$(GO_TEST) -cover -p=1 ./...
 
+go-test-coverage: go-fmt ## Run the tests of the project and open the coverage in a Browser
+	$(GO_TEST) -cover -p=1 -covermode=count -coverprofile=coverage.out ./...
+	$(GO_CMD) tool cover -html=coverage.out
+
+
 go-test-clean: go-fmt ## Run the clean cache tests of the project
 	$(GO_CMD) clean -testcache
 
